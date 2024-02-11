@@ -1,0 +1,11 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}New ParaPharmacie{% endblock %}
+
+{% block body %}
+    <h1>Create new ParaPharmacie</h1>
+
+    {{ include('para_pharmacie/_form.html.twig') }}
+
+    <a href="{{ path('app_para_pharmacie_index') }}">back to list</a>
+{% endblock %}

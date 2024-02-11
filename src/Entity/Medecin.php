@@ -33,7 +33,7 @@ class Medecin
     private ?string $specialite = null;
 
     #[ORM\ManyToOne(inversedBy: 'relation')]
-    private ?Specialite $idSpecialite = null;
+    private ?Specialite $idMedcin = null;
 
     public function getId(): ?int
     {
@@ -112,14 +112,14 @@ class Medecin
         return $this;
     }
 
-    public function getIdSpecialite(): ?Specialite
+    public function getIdMedcin(): ?Specialite
     {
-        return $this->idSpecialite;
+        return $this->idMedcin;
     }
 
-    public function setIdMedcin(?Specialite $idSpecialite): static
+    public function setIdMedcin(?Specialite $idMedcin): static
     {
-        $this->idSpecialite = $idSpecialite;
+        $this->idMedcin = $idMedcin;
 
         return $this;
     }

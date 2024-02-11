@@ -11,10 +11,8 @@ class ParaPharmacie
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
+    
     private ?int $id = null;
-
-    #[ORM\Column]
-    private ?int $idPara = null;
 
     #[ORM\Column(length: 255)]
     private ?string $nomPara = null;
@@ -26,7 +24,7 @@ class ParaPharmacie
     private ?int $nbrPharmaciens = null;
 
     #[ORM\Column]
-    private ?int $n°tel = null;
+    private ?int $numtel = null;
 
     #[ORM\Column(length: 255)]
     private ?string $etatPara = null;
@@ -35,9 +33,9 @@ class ParaPharmacie
     private ?Zone $ville = null;
 
 
-    public function getIdPara(): ?int
+    public function getId(): ?int
     {
-        return $this->idPara;
+        return $this->id;
     }
 
 
@@ -77,14 +75,14 @@ class ParaPharmacie
         return $this;
     }
 
-    public function getN°tel(): ?int
+    public function getNumtel(): ?int
     {
-        return $this->n°tel;
+        return $this->numtel;
     }
 
-    public function setN°tel(int $n°tel): static
+    public function setNumtel(int $numtel): static
     {
-        $this->n°tel = $n°tel;
+        $this->numtel = $numtel;
 
         return $this;
     }

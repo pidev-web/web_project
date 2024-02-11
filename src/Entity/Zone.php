@@ -15,10 +15,7 @@ class Zone
     #[ORM\Column]
     private ?int $id = null;
 
-    #[ORM\Column]
-   
-    private ?int $idZone = null;
-
+    
     #[ORM\Column(length: 255)]
     private ?string $ville = null;
 
@@ -32,16 +29,11 @@ class Zone
     {
         $this->relation = new ArrayCollection();
     }
-
-   
-
-    public function getIdZone(): ?int
+    
+    public function getId(): ?string
     {
-        return $this->idZone;
+        return $this->id;
     }
-
-   
-
     public function getVille(): ?string
     {
         return $this->ville;
