@@ -42,6 +42,8 @@ class ParaPharmacieController extends AbstractController
         ]);
     }
 
+      
+
     #[Route('/{id}', name: 'app_para_pharmacie_show', methods: ['GET'])]
     public function show(ParaPharmacie $paraPharmacie): Response
     {
@@ -78,4 +80,7 @@ class ParaPharmacieController extends AbstractController
 
         return $this->redirectToRoute('app_para_pharmacie_index', [], Response::HTTP_SEE_OTHER);
     }
+
+
+
 }

@@ -21,6 +21,18 @@ class ParaPharmacieRepository extends ServiceEntityRepository
         parent::__construct($registry, ParaPharmacie::class);
     }
 
+    public function isUnique(ParaPharmacie $paraPharmacie): bool
+    {
+        $existingRecord = $this->findOneBy([
+            'idPara' => $paraPharmacie->getIdPara(),
+            'email' => $paraPharmacie->getEmail(),
+            'numtel' => $paraPharmacie->getNumtel(),
+            'nomPara' => $paraPharmacie->getNomPara(),
+        ]);
+
+        return $existingRecord === null;
+    }
+
 //    /**
 //     * @return ParaPharmacie[] Returns an array of ParaPharmacie objects
 //     */

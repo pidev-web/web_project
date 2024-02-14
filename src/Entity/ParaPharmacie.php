@@ -5,7 +5,9 @@ namespace App\Entity;
 use App\Repository\ParaPharmacieRepository;
 use Doctrine\ORM\Mapping as ORM;
 
+
 #[ORM\Entity(repositoryClass: ParaPharmacieRepository::class)]
+
 class ParaPharmacie
 {
     #[ORM\Id]
@@ -31,6 +33,9 @@ class ParaPharmacie
 
     #[ORM\ManyToOne(inversedBy: 'relation')]
     private ?Zone $ville = null;
+
+    #[ORM\Column]
+    private ?int $idPara = null;
 
 
     public function getId(): ?int
@@ -107,6 +112,18 @@ class ParaPharmacie
     public function setVille(?Zone $ville): static
     {
         $this->ville = $ville;
+
+        return $this;
+    }
+
+    public function getIdPara(): ?int
+    {
+        return $this->idPara;
+    }
+    
+    public function setIdPara(int $idPara): static
+    {
+        $this->idPara = $idPara;
 
         return $this;
     }
