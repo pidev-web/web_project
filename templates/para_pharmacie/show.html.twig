@@ -1,0 +1,42 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}ParaPharmacie{% endblock %}
+
+{% block body %}
+    <h1>ParaPharmacie</h1>
+
+    <table class="table">
+        <tbody>
+            <tr>
+                <th>Id</th>
+                <td>{{ para_pharmacie.id }}</td>
+            </tr>
+            <tr>
+                <th>NomPara</th>
+                <td>{{ para_pharmacie.nomPara }}</td>
+            </tr>
+            <tr>
+                <th>Email</th>
+                <td>{{ para_pharmacie.email }}</td>
+            </tr>
+            <tr>
+                <th>NbrPharmaciens</th>
+                <td>{{ para_pharmacie.nbrPharmaciens }}</td>
+            </tr>
+            <tr>
+                <th>N°tel</th>
+                <td>{{ para_pharmacie.numtel }}</td>
+            </tr>
+            <tr>
+                <th>EtatPara</th>
+                <td>{{ para_pharmacie.etatPara }}</td>
+            </tr>
+        </tbody>
+    </table>
+
+    <a href="{{ path('app_para_pharmacie_index') }}">back to list</a>
+
+    <a href="{{ path('app_para_pharmacie_edit', {'id': para_pharmacie.id}) }}">edit</a>
+
+    {{ include('para_pharmacie/_delete_form.html.twig') }}
+{% endblock %}
