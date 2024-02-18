@@ -15,12 +15,9 @@ class FichePatient
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
-    private ?string $idFiche = null;
-
-    #[ORM\Column(length: 255)]
     private ?string $adresse = null;
 
-    #[ORM\Column(type: Types::DATE_MUTABLE)]
+    #[ORM\Column(type: Types::DATETIME_MUTABLE)]
     private ?\DateTimeInterface $date_naissance = null;
 
     #[ORM\Column]
@@ -29,24 +26,27 @@ class FichePatient
     #[ORM\Column]
     private ?float $taille = null;
 
-    #[ORM\ManyToOne(inversedBy: 'relationPatient')]
-    private ?Patient $relation = null;
+    #[ORM\OneToOne(inversedBy: 'relationFiche', cascade: ['persist'])]
+    private ?Patient $relationPatient = null;
 
-    public function getId(): ?int
+    #[ORM\ManyToOne(inversedBy: 'relationFiche1')]
+    private ?Medecin $relationMedecin = null;
+
+    #[ORM\Column]
+    private ?int $Code_Postal = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $Ville = null;
+
+    #[ORM\Column(length: 255)]
+    private ?string $maladie = null;
+
+    #[ORM\Column(length: 1)]
+    private ?string $Sexe = null;
+
+    public function getIdFiche(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdFiche(): ?string
-    {
-        return $this->idFiche;
-    }
-
-    public function setIdFiche(string $idFiche): static
-    {
-        $this->idFiche = $idFiche;
-
-        return $this;
     }
 
     public function getAdresse(): ?string
@@ -97,14 +97,74 @@ class FichePatient
         return $this;
     }
 
-    public function getRelation(): ?Patient
+    public function getRelationPatient(): ?Patient
     {
-        return $this->relation;
+        return $this->relationPatient;
     }
 
-    public function setRelation(?Patient $relation): static
+    public function setRelationPatient(?Patient $relationPatient): static
     {
-        $this->relation = $relation;
+        $this->relationPatient = $relationPatient;
+
+        return $this;
+    }
+
+    public function getRelationMedecin(): ?Medecin
+    {
+        return $this->relationMedecin;
+    }
+
+    public function setRelationMedecin(?Medecin $relationMedecin): static
+    {
+        $this->relationMedecin = $relationMedecin;
+
+        return $this;
+    }
+
+    public function getCodePostal(): ?int
+    {
+        return $this->Code_Postal;
+    }
+
+    public function setCodePostal(int $Code_Postal): static
+    {
+        $this->Code_Postal = $Code_Postal;
+
+        return $this;
+    }
+
+    public function getVille(): ?string
+    {
+        return $this->Ville;
+    }
+
+    public function setVille(string $Ville): static
+    {
+        $this->Ville = $Ville;
+
+        return $this;
+    }
+
+    public function getMaladie(): ?string
+    {
+        return $this->maladie;
+    }
+
+    public function setMaladie(string $maladie): static
+    {
+        $this->maladie = $maladie;
+
+        return $this;
+    }
+
+    public function getSexe(): ?string
+    {
+        return $this->Sexe;
+    }
+
+    public function setSexe(string $Sexe): static
+    {
+        $this->Sexe = $Sexe;
 
         return $this;
     }

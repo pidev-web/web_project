@@ -3,8 +3,6 @@
 namespace App\Entity;
 
 use App\Repository\PatientRepository;
-use Doctrine\Common\Collections\ArrayCollection;
-use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: PatientRepository::class)]
@@ -14,9 +12,6 @@ class Patient
     #[ORM\GeneratedValue]
     #[ORM\Column]
     private ?int $id = null;
-
-    #[ORM\Column(length: 255)]
-    private ?string $idPatient = null;
 
     #[ORM\Column(length: 255)]
     private ?string $nomP = null;
@@ -30,29 +25,12 @@ class Patient
     #[ORM\Column]
     private ?int $numTelP = null;
 
-    #[ORM\OneToMany(mappedBy: 'relation', targetEntity: FichePatient::class)]
-    private Collection $relationPatient;
+    #[ORM\OneToOne(mappedBy: 'relationPatient', cascade: ['persist'])]
+    private ?FichePatient $relationFiche = null;
 
-    public function __construct()
-    {
-        $this->relationPatient = new ArrayCollection();
-    }
-
-    public function getId(): ?int
+    public function getIdPatient(): ?int
     {
         return $this->id;
-    }
-
-    public function getIdPatient(): ?string
-    {
-        return $this->idPatient;
-    }
-
-    public function setIdPatient(string $idPatient): static
-    {
-        $this->idPatient = $idPatient;
-
-        return $this;
     }
 
     public function getNomP(): ?string
@@ -103,32 +81,24 @@ class Patient
         return $this;
     }
 
-    /**
-     * @return Collection<int, FichePatient>
-     */
-    public function getRelationPatient(): Collection
+    public function getRelationFiche(): ?FichePatient
     {
-        return $this->relationPatient;
+        return $this->relationFiche;
     }
 
-    public function addRelationPatient(FichePatient $relationPatient): static
+    public function setRelationFiche(?FichePatient $relationFiche): static
     {
-        if (!$this->relationPatient->contains($relationPatient)) {
-            $this->relationPatient->add($relationPatient);
-            $relationPatient->setRelation($this);
+        // unset the owning side of the relation if necessary
+        if ($relationFiche === null && $this->relationFiche !== null) {
+            $this->relationFiche->setRelationPatient(null);
         }
 
-        return $this;
-    }
-
-    public function removeRelationPatient(FichePatient $relationPatient): static
-    {
-        if ($this->relationPatient->removeElement($relationPatient)) {
-            // set the owning side to null (unless already changed)
-            if ($relationPatient->getRelation() === $this) {
-                $relationPatient->setRelation(null);
-            }
+        // set the owning side of the relation if necessary
+        if ($relationFiche !== null && $relationFiche->getRelationPatient() !== $this) {
+            $relationFiche->setRelationPatient($this);
         }
+
+        $this->relationFiche = $relationFiche;
 
         return $this;
     }

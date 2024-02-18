@@ -69,13 +69,11 @@ class PatientController extends AbstractController
     }
 
     #[Route('/{id}', name: 'app_patient_delete', methods: ['POST'])]
-    public function delete(Request $request, Patient $patient, EntityManagerInterface $entityManager): Response
+    public function delete(EntityManagerInterface $entityManager, PatientRepository $rep, $id): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$patient->getId(), $request->request->get('_token'))) {
-            $entityManager->remove($patient);
-            $entityManager->flush();
-        }
-
+        $patient = $rep->find($id);
+        $entityManager->remove($patient);
+        $entityManager->flush();
         return $this->redirectToRoute('app_patient_index', [], Response::HTTP_SEE_OTHER);
     }
 }

@@ -12,12 +12,10 @@ class PatientType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('idPatient')
-            ->add('nomP')
             ->add('prenomP')
+            ->add('nomP')
             ->add('email_P')
-            ->add('numTelP')
-        ;
+            ->add('numTelP');
     }
 
     public function configureOptions(OptionsResolver $resolver): void

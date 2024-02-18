@@ -3,6 +3,8 @@
 namespace App\Entity;
 
 use App\Repository\MedecinRepository;
+use Doctrine\Common\Collections\ArrayCollection;
+use Doctrine\Common\Collections\Collection;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
 
@@ -34,6 +36,7 @@ class Medecin
 
     #[ORM\ManyToOne(inversedBy: 'relation')]
     private ?Specialite $idMedcin = null;
+
 
     public function getId(): ?int
     {
