@@ -24,7 +24,7 @@ class ParaPharmacieRepository extends ServiceEntityRepository
     public function isUnique(ParaPharmacie $paraPharmacie): bool
     {
         $existingRecord = $this->findOneBy([
-            'idPara' => $paraPharmacie->getIdPara(),
+            'idPara' => $paraPharmacie->getId(),
             'email' => $paraPharmacie->getEmail(),
             'numtel' => $paraPharmacie->getNumtel(),
             'nomPara' => $paraPharmacie->getNomPara(),

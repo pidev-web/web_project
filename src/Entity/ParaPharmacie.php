@@ -4,45 +4,59 @@ namespace App\Entity;
 
 use App\Repository\ParaPharmacieRepository;
 use Doctrine\ORM\Mapping as ORM;
-
+use Symfony\Component\Validator\Constraints as Assert;
+use Symfony\Component\Form\Extension\Core\Type\HiddenType;
+use Symfony\Component\Validator\Constraints\NotBlank;
+use Symfony\Component\Validator\Constraints\Length;
+use Symfony\Component\Validator\Constraints\Regex;
 
 #[ORM\Entity(repositoryClass: ParaPharmacieRepository::class)]
-
 class ParaPharmacie
 {
     #[ORM\Id]
     #[ORM\GeneratedValue]
     #[ORM\Column]
-    
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "Le nom de la parapharmacie ne peut pas être vide.")]
     private ?string $nomPara = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(message: "L'email ne peut pas être vide.")]
+    #[Assert\Email(message: "Veuillez saisir une adresse e-mail valide.")]
     private ?string $email = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Le nombre de pharmaciens ne peut pas être vide.")]
+    #[Assert\Range(
+        min: 1,
+        max: 20,
+        notInRangeMessage: "Le nombre de pharmaciens doit être compris entre {{ min }} et {{ max }}."
+    )]
     private ?int $nbrPharmaciens = null;
 
     #[ORM\Column]
+    #[Assert\NotNull(message: "Le numéro de téléphone ne peut pas être vide.")]
+    #[Assert\Range(
+        min: 10000000,
+        max: 99999999,
+        notInRangeMessage: "Le numéro de téléphone doit être 8 chiffres"
+    )]
     private ?int $numtel = null;
 
     #[ORM\Column(length: 255)]
+
     private ?string $etatPara = null;
 
-    #[ORM\ManyToOne(inversedBy: 'relation')]
+    #[ORM\ManyToOne(inversedBy: 'relation',cascade:['remove'])]
     private ?Zone $ville = null;
 
     #[ORM\Column]
-    private ?int $idPara = null;
-
-
     public function getId(): ?int
     {
         return $this->id;
     }
-
 
     public function getNomPara(): ?string
     {
@@ -112,18 +126,6 @@ class ParaPharmacie
     public function setVille(?Zone $ville): static
     {
         $this->ville = $ville;
-
-        return $this;
-    }
-
-    public function getIdPara(): ?int
-    {
-        return $this->idPara;
-    }
-    
-    public function setIdPara(int $idPara): static
-    {
-        $this->idPara = $idPara;
 
         return $this;
     }

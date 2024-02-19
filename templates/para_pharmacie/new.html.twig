@@ -18,7 +18,6 @@
   <link rel="stylesheet" href="{{asset('css/owl.carousel.min.css')}}">
   <link rel="stylesheet" href="{{asset('css/owl.theme.default.min.css')}}">
 
-
   <link rel="stylesheet" href="{{asset('css/aos.css')}}">
 
   <link rel="stylesheet" href="{{asset('css/style.css')}}">
@@ -31,6 +30,7 @@
       background-position: center;
       position: relative;
       padding-top: 100px; /* Adjust this value to move the box below the navbar */
+
     }
 
     .form-box {
@@ -82,28 +82,12 @@
           <div class="main-nav d-none d-lg-block">
             <nav class="site-navigation text-right text-md-center" role="navigation">
               <ul class="site-menu js-clone-nav d-none d-lg-block">
-                <li><a href="index.html">Home</a></li>
-                <li class="active"><a href="shop.html">Store</a></li>
-                <li class="has-children">
-                  <a href="#">Products</a>
+                <li><a href="base.html.twig">Home</a></li>
+                <li class="has-children" >
+                  <a href="">gestion Para</a>
                   <ul class="dropdown">
-                    <li><a href="#">Supplements</a></li>
-                    <li class="has-children">
-                      <a href="#">Vitamins</a>
-                      <ul class="dropdown">
-                        <li><a href="#">Supplements</a></li>
-                        <li><a href="#">Vitamins</a></li>
-                        <li><a href="#">Diet &amp; Nutrition</a></li>
-                        <li><a href="#">Tea &amp; Coffee</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="#">Diet &amp; Nutrition</a></li>
-                    <li><a href="#">Tea &amp; Coffee</a></li>
-                    
-                  </ul>
-                </li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li class="active"><a href="">ParaPharmacie</a></li>
+                <li ><a href="{{ path('app_zone_index') }}">zone</a></li>
               </ul>
             </nav>
           </div>
@@ -133,29 +117,53 @@
 
     </div>
 
-    <!-- Background image container -->
-    <div class="background-image">
+    
       <div class="container">
+      <div class="background-image">
         <div class="row mb-5">
           <div class="col-md-6 mx-auto">
             <div class="form-box">
               <h1 class="text-center mb-4" style="color: green;">Create ParaPharmacie</h1>
               <form method="post"> 
-    {{ form_start(form) }}
-    {{ form_row(form.idPara) }}
-    {{ form_errors(form.idPara) }}
-    {{ form_row(form.email, {'attr': {'pattern': '^[^@]+@(gmail|yahoo|outlook)\.(com|fr|tn)$', 'title': 'tu dois respecter l email','required': 'required'}}) }}
-    {{ form_errors(form.email) }}
-    {{ form_row(form.numtel, {'attr': {'min': 10000000, 'max': 99999999,  'title': 'numéro de téléphone doit être 8 chiffres','required': 'required', 'style': 'width: 300px;'}}) }}  
-    {{ form_errors(form.numtel) }}
-    {{ form_row(form.nbrPharmaciens, {'attr': {'min': 1, 'max': 4, 'title': 'nombre de pharmacien ne dépasse pas 4','required': 'required'}}) }}
-    {{ form_row(form.etatPara, {'attr': {'pattern': '(fermé|ouverte)', 'title': 'fermé ou ouverte', 'required': 'required'}}) }}
-    {{ form_row(form.nomPara)}}
-    {{ form_errors(form.nomPara) }}
-    {{ form_row(form.ville)}}
-                <button class="btn btn-block btn-primary">{{ button_label|default('Save') }}</button>
-                {{ form_end(form) }}
-                <a href="{{ path('app_para_pharmacie_index') }}" class="btn btn-block btn-secondary mt-3">Back to List</a>
+   {{ form_start(form, {'attr': {'novalidate': 'novalidate'}}) }}
+<table class="table">
+    
+    <tbody>
+        <tr>
+            <td>{{ form_label(form.email) }}</td>
+            <td>{{ form_widget(form.email) }}</td>
+            <td>{{ form_errors(form.email) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form_label(form.numtel) }}</td>
+            <td>{{ form_widget(form.numtel) }}</td>
+            <td>{{ form_errors(form.numtel) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form_label(form.nbrPharmaciens) }}</td>
+            <td>{{ form_widget(form.nbrPharmaciens) }}</td>
+            <td>{{ form_errors(form.nbrPharmaciens) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form_label(form.etatPara) }}</td>
+            <td>{{ form_widget(form.etatPara) }}</td>
+            <td>{{ form_errors(form.etatPara) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form_label(form.nomPara) }}</td>
+            <td>{{ form_widget(form.nomPara) }}</td>
+            <td>{{ form_errors(form.nomPara) }}</td>
+        </tr>
+        <tr>
+            <td>{{ form_label(form.ville) }}</td>
+            <td>{{ form_widget(form.ville) }}</td>
+            <td>{{ form_errors(form.ville) }}</td>
+        </tr>
+    </tbody>
+</table>
+ <button type="submit" class="btn btn-block btn-primary">{{ button_label|default('Save') }}</button>
+   <a href="{{ path('app_para_pharmacie_index') }}" class="btn btn-block btn-secondary mt-3">Back to List</a>
+{{ form_end(form) }}
               </form>
             </div>
           </div>

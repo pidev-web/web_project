@@ -21,18 +21,10 @@ class ParaPharmacieType extends AbstractType
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('idPara')
             ->add('nomPara')
             ->add('email')
             ->add('nbrPharmaciens')
-            ->add('numtel', null, [
-                'constraints' => [
-                    new Length(['min' => 8, 'max' => 8]),
-                    new Regex([
-                        'pattern' => '/^\d{8}$/'
-                    ]),
-                ],
-            ])
+            ->add('numtel')
             ->add('etatPara')
             ->add('ville', EntityType::class, [
                 'class' => Zone::class,

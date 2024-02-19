@@ -22,6 +22,46 @@
   <link rel="stylesheet" href="{{asset('css/aos.css')}}">
 
   <link rel="stylesheet" href="{{asset('css/style.css')}}">
+
+  <style>
+
+.btn-back {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #17a2b8; /* Change to desired color */
+  color: #fff;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+
+.btn-edit {
+  display: inline-block;
+  padding: 8px 16px;
+  background-color: #ffc107; /* Change to desired color */
+  color: #212529;
+  text-decoration: none;
+  border-radius: 4px;
+  transition: background-color 0.3s;
+}
+ .background-image {
+      background-image: url('{{ asset('images/para.jpg') }}'); /* Path to your image */
+      background-size: cover;
+      background-position: center;
+      position: relative;
+      padding-top: 100px; /* Adjust this value to move the box below the navbar */
+
+    }
+
+ .form-box {
+      border: 2px solid #17a2b8;
+      border-radius: 10px;
+      padding: 20px;
+      background-color: #f8f9fa;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+  </style>
 {% endblock %}
 </head>
 
@@ -31,8 +71,7 @@
 
 
     <div class="site-navbar py-2">
-
-      <div class="search-wrap">
+        <div class="search-wrap">
         <div class="container">
           <a href="#" class="search-close js-search-close"><span class="icon-close2"></span></a>
           <form action="#" method="post">
@@ -45,34 +84,18 @@
         <div class="d-flex align-items-center justify-content-between">
           <div class="logo">
             <div class="site-logo">
-              <a href="index.html" class="js-logo-clone"><strong class="text-primary">Pharma</strong>tive</a>
+              <a href="index.html" class="js-logo-clone"><strong class="text-primary">Care</strong>Link</a>
             </div>
           </div>
           <div class="main-nav d-none d-lg-block">
             <nav class="site-navigation text-right text-md-center" role="navigation">
               <ul class="site-menu js-clone-nav d-none d-lg-block">
-                <li><a href="index.html">Home</a></li>
-                <li class="active"><a href="shop.html">Store</a></li>
-                <li class="has-children">
-                  <a href="#">Products</a>
+                <li><a href="base.html.twig">Home</a></li>
+                <li class="has-children" >
+                  <a href="">gestion Para</a>
                   <ul class="dropdown">
-                    <li><a href="#">Supplements</a></li>
-                    <li class="has-children">
-                      <a href="#">Vitamins</a>
-                      <ul class="dropdown">
-                        <li><a href="#">Supplements</a></li>
-                        <li><a href="#">Vitamins</a></li>
-                        <li><a href="#">Diet &amp; Nutrition</a></li>
-                        <li><a href="#">Tea &amp; Coffee</a></li>
-                      </ul>
-                    </li>
-                    <li><a href="#">Diet &amp; Nutrition</a></li>
-                    <li><a href="#">Tea &amp; Coffee</a></li>
-                    
-                  </ul>
-                </li>
-                <li><a href="about.html">About</a></li>
-                <li><a href="contact.html">Contact</a></li>
+                <li class="active"><a href="">ParaPharmacie</a></li>
+                <li ><a href="{{ path('app_zone_index') }}">zone</a></li>
               </ul>
             </nav>
           </div>
@@ -100,17 +123,21 @@
       </div>
     </div>
 
-   <div class="site-section">
-  <div class="container">
-    <div class="row mb-5">
-      <form class="col-md-12" method="post">
-         <h1 style="color: green;">ParaPharmacie</h1>
+    </div>
 
-    <table class="table">
+    <!-- Background image container -->
+    
+      <div class="container">
+      <div class="background-image">
+        <div class="row mb-5">
+          <div class="col-md-6 mx-auto">
+            <div class="form-box">
+            <h1 class="text-center mb-4" style="color: green;">détails ParaPharmacie</h1>
+              <table class="table">
         <tbody>
             <tr>
                 <th style="color: green;">Id</th>
-                <td style="color: black;">{{ para_pharmacie.idPara }}</td>
+                <td style="color: black;">{{ para_pharmacie.id }}</td>
             </tr>
             <tr>
                  <th style="color: green;">NomPara</th>
@@ -134,36 +161,16 @@
             </tr>
         </tbody>
     </table>
-<style>
-.btn-back {
-  display: inline-block;
-  padding: 8px 16px;
-  background-color: #17a2b8; /* Change to desired color */
-  color: #fff;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-}
-
-.btn-edit {
-  display: inline-block;
-  padding: 8px 16px;
-  background-color: #ffc107; /* Change to desired color */
-  color: #212529;
-  text-decoration: none;
-  border-radius: 4px;
-  transition: background-color 0.3s;
-}
- </style>
-    <a href="{{ path('app_para_pharmacie_index') }}"class="btn btn-back">back to list</a>
-    <a href="{{ path('app_para_pharmacie_edit', {'id': para_pharmacie.idPara}) }}" class="btn btn-edit">edit</a>
+<a href="{{ path('app_para_pharmacie_index') }}"class="btn btn-back">back to list</a>
+    <a href="{{ path('app_para_pharmacie_edit', {'id': para_pharmacie.id}) }}" class="btn btn-edit">edit</a>
 
     {{ include('para_pharmacie/_delete_form.html.twig') }}
+            </div>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
-</div>
-
-
 {% block js %}
   <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
   <script src="{{asset('js/jquery-ui.js')}}"></script>
