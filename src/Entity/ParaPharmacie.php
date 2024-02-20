@@ -24,7 +24,10 @@ class ParaPharmacie
 
     #[ORM\Column(length: 255)]
     #[Assert\NotBlank(message: "L'email ne peut pas être vide.")]
-    #[Assert\Email(message: "Veuillez saisir une adresse e-mail valide.")]
+    #[Assert\Regex(
+        pattern: "/^[^@]+@(gmail|yahoo|outlook)\.(com|fr|tn)$/",
+        message: "Veuillez saisir une adresse e-mail valide (domaine gmail, yahoo ou outlook uniquement)."
+    )] 
     private ?string $email = null;
 
     #[ORM\Column]
@@ -46,6 +49,7 @@ class ParaPharmacie
     private ?int $numtel = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotNull(message: "Le nombre de pharmaciens ne peut pas être vide.")]
 
     private ?string $etatPara = null;
 
