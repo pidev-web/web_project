@@ -37,7 +37,7 @@
                 }
 
                 .form-container {
-                  max-width: 600px;
+                  max-width: fit-content;
                   width: 100%;
                   padding: 20px;
                   background-color: #ffffff;
@@ -78,14 +78,14 @@
         <div class="site-section">
           <div class="container">
             <div class="row">
-              <form class="col-md-12" method="post">
+              <form class="col-md-12" method="post" novalidate >
                 <div class="site-blocks-table" style="max-width: 100%; overflow-x: hidden;">
                   <div class="row">
                     <div class="title-section text-center col-12">
                       <h2>Ajouter un <strong class="text-primary">Produit</strong></h2>
                     </div>
                   </div>
-                  {{ include('produit/_form.html.twig') }}
+                  {{ include('produit/_form.html.twig',{'button_label': 'new'}) }}
                 </div>
               </form>
             </div>

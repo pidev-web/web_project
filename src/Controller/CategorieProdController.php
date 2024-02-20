@@ -71,10 +71,10 @@ class CategorieProdController extends AbstractController
     #[Route('/{id}', name: 'app_categorie_prod_delete', methods: ['POST'])]
     public function delete(Request $request, CategorieProd $categorieProd, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$categorieProd->getId(), $request->request->get('_token'))) {
+        
             $entityManager->remove($categorieProd);
             $entityManager->flush();
-        }
+       
 
         return $this->redirectToRoute('app_categorie_prod_index', [], Response::HTTP_SEE_OTHER);
     }

@@ -29,8 +29,7 @@ class ProduitController extends AbstractController
         $form = $this->createForm(ProduitType::class, $produit);
         $form->handleRequest($request);
                
-        if ($form->isSubmitted() && $form->isValid()
-        ) {
+        if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($produit);
             $entityManager->flush();
 
@@ -39,7 +38,7 @@ class ProduitController extends AbstractController
 
         return $this->render('produit/new.html.twig', [
             'produit' => $produit,
-            'form' => $form->createView(),
+            'form' => $form,
         ]);
     }
 
@@ -72,10 +71,10 @@ class ProduitController extends AbstractController
     #[Route('/{id}', name: 'app_produit_delete', methods: ['POST'])]
     public function delete(Request $request, Produit $produit, EntityManagerInterface $entityManager): Response
     {
-        if ($this->isCsrfTokenValid('delete'.$produit->getId(), $request->request->get('_token'))) {
+        
             $entityManager->remove($produit);
             $entityManager->flush();
-        }
+        
 
         return $this->redirectToRoute('app_produit_index', [], Response::HTTP_SEE_OTHER);
     }

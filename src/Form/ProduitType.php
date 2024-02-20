@@ -20,7 +20,7 @@ class ProduitType extends AbstractType
             ->add('stock_prod')
             ->add('id_C', EntityType::class, [
                 'class' => CategorieProd::class,
-'choice_label' => 'id',
+'choice_label' => 'nom_categorie',
             ])
         ;
     }

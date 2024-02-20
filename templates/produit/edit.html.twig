@@ -1,5 +1,7 @@
 
+
 {###########################}
+
 {% extends 'base.html.twig' %}
 {% block html %} 
 <!DOCTYPE html>
@@ -48,7 +50,7 @@
         {% endblock %}
     </head>
 
-    {% block title %}Edit Produit{% endblock %}
+    {% block title %}Edit Prod{% endblock %}
 
 {##############################################################}
 {#########################BODY#################################}
@@ -79,7 +81,7 @@
                         <div class="title-section text-center col-12">
                             <h2>Modifier <strong class="text-primary">Produit</strong></h2>
                         </div>
-                        <form class="col-md-12" method="post">
+                        <form class="col-md-12" method="post" novalidate>
                             <div class="site-blocks-table" style="max-width: 100%; overflow-x: hidden;">
                                 {{ include('produit/_form.html.twig', {'button_label': 'Update'}) }}
                             </div>

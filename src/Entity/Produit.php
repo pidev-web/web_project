@@ -24,6 +24,8 @@ private string $nom_prod;
 #[ORM\Column]
 #[Assert\NotBlank(message: "Product price is required")]
 #[Assert\GreaterThanOrEqual(0, message: "Price cannot be negative")]
+
+
 private float $prix_prod;
 
 #[ORM\Column]
@@ -33,7 +35,7 @@ private int $stock_prod;
 
 #[ORM\ManyToOne(inversedBy: 'update_Prod')]
 #[ORM\JoinColumn(nullable: false)]
-private CategorieProd $id_C;
+private ?CategorieProd $id_C;
 
 
     public function getId(): ?int
@@ -90,14 +92,14 @@ private CategorieProd $id_C;
     }
 
     public function getIdC(): ?CategorieProd
-    {
-        return $this->id_C;
-    }
+{
+    return $this->id_C;
+}
 
-    public function setIdC(?CategorieProd $id_C): static
-    {
-        $this->id_C = $id_C;
+public function setIdC(?CategorieProd $id_C): static
+{
+    $this->id_C = $id_C;
 
-        return $this;
-    }
+    return $this;
+}
 }
