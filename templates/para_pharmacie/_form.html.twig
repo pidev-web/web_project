@@ -1,7 +1,0 @@
-{{ form_start(form) }}
-    {{ form_row(form.nbrPharmaciens, {'attr': {'min': 1, 'max': 4, 'required': 'required'}}) }}
-    {{ form_row(form.email, {'attr': {'pattern': '^[^@]+@(gmail|yahoo|outlook)\.com$', 'required': 'required'}}) }}
-{{ form_row(form.numtel, {'attr': {'pattern': '\d{8}', 'title': 'Please enter 8 digits', 'required': 'required'}}) }}    {{ form_row(form.etatPara, {'attr': {'pattern': '(fermé|ouverte)', 'title': 'fermé ou ouverte', 'required': 'required'}}) }}
-    {# Add other form fields here #}
-    <button class="btn">{{ button_label|default('Save') }}</button>
-{{ form_end(form) }}

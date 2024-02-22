@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use App\Repository\PatientRepository;
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Component\Validator\Constraints as Assert;
 
 #[ORM\Entity(repositoryClass: PatientRepository::class)]
 class Patient
@@ -14,19 +15,27 @@ class Patient
     private ?int $id = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(allowNull: false, message: "Veuillez saisir votre nom.")]
     private ?string $nomP = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(allowNull: false, message: "Veuillez saisir votre prenom.")]
     private ?string $prenomP = null;
 
     #[ORM\Column(length: 255)]
+    #[Assert\NotBlank(allowNull: false, message: "Veuillez saisir votre email .")]
+    #[Assert\Regex(pattern: "/^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/", message: "L'adresse email n'est pas valide.")]
     private ?string $email_P = null;
 
     #[ORM\Column]
+    #[Assert\NotBlank(allowNull: false, message: "Veuillez saisir votre numero de telephone .")]
+    #[Assert\GreaterThan(value: 0, message: "le numero de telephone doit etre positive")]
+    #[Assert\Length(min: 8, max: 8, exactMessage: "le numero de telephone doit contenir 8 nombres")]
     private ?int $numTelP = null;
 
-    #[ORM\OneToOne(mappedBy: 'relationPatient', cascade: ['persist'])]
+    #[ORM\OneToOne(mappedBy: 'relationPatient', cascade: ['persist', 'remove'])]
     private ?FichePatient $relationFiche = null;
+
 
     public function getIdPatient(): ?int
     {
