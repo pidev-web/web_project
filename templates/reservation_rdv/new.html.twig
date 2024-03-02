@@ -2,54 +2,62 @@
 {% block html %} 
 <!DOCTYPE html>
 <html lang="en">
-<head>
+    <head>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-{% block css %}
-{{ parent() }}
-    <link href="{{asset('https://fonts.googleapis.com/css?family=Roboto&display=swap')}}" rel="stylesheet" />
-    <link href="{{asset('https://fonts.googleapis.com/css?family=Segoe+UI+Emoji&display=swap')}}" rel="stylesheet" />
-    <link href="{{asset('css/main.css')}}" rel="stylesheet" />
-    <style>
- body {
- font-family: 'Nunito', sans-serif;
-  background-color: #f8f9fa;
- margin: 0; /* Reset default margin */
-  padding: 0; /* Reset default padding */
-    }
+        {% block css %}
+            {{ parent()}}
 
- .site-wrap {
- min-height: 100vh; /* Set minimum height to full viewport height */
-  display: flex;
-  flex-direction: column;
- }
-
- .site-footer {
- margin-top: auto; /* Push footer to the bottom */
-   }
-.center-container {
- flex: 1; /* Allow the center container to take up remaining space */
- display: flex;
-  justify-content: center;
-     align-items: center;
+            <style>
+              <style>
+                body {
+                  font-family: 'Nunito', sans-serif;
+                  background-color: #f8f9fa;
+                  margin: 0; /* Reset default margin */
+                  padding: 0; /* Reset default padding */
                 }
 
-.form-container {
-                  max-width: 600px;
+                .site-wrap {
+                  min-height: 100vh; /* Set minimum height to full viewport height */
+                  display: flex;
+                  flex-direction: column;
+                }
+
+                .site-footer {
+                  margin-top: auto; /* Push footer to the bottom */
+                }
+              .center-Buttons-container {
+                flex: 1;
+                /* Allow the center container to take up remaining space */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                }
+                .center-container {
+                  flex: 1; /* Allow the center container to take up remaining space */
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+               
+                }
+
+                .form-container {
+                  max-width:fit-content;
                   width: 100%;
-                  padding: 20px;
+                  padding: 40px;
                   background-color: #ffffff;
-                  border-radius: 10px;
+                  border-radius: 20px;
                   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    }
- </style>
-{% endblock %} 
-</head>
-{% block title %}Patient{% endblock %}
+                }
+            </style>
+        {% endblock %}
+    </head>
+{% block title %}New Patient{% endblock %}
 
 {% block body %}
-<div class="site-wrap">
-<div class="site-navbar py-2">
+ <div class="site-wrap">
+
+       <div class="site-navbar py-2">
 
       <div class="search-wrap">
         <div class="container">
@@ -73,7 +81,7 @@
           <div class="main-nav d-none d-lg-block">
     <nav class="site-navigation text-right text-md-center" role="navigation">
         <ul class="site-menu js-clone-nav d-none d-lg-block" id="main-menu">
-            <li ><a href="{{ path('app_home') }}">Page d'accueil</a></li>
+            <li><a href="{{ path('app_home') }}">Page d'accueil</a></li>
             <li><a href="#">Parapharmacie</a></li>
             <li class="has-children">
                 <a href="#">Produits</a>
@@ -93,7 +101,7 @@
                 </ul>
             </li>
             <li class="active"><a href="{{ path('app_patient_index') }}">Patient</a>
-            <li><a href="{{ path('app_fiche_patient_index') }}">Médecin</a><li>
+            <li><a href="{{ path('app_evenement_index') }}">Evènements</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
@@ -107,7 +115,12 @@
         </div>
       </div>
     </div>
-<div class="bg-light py-3">
+
+
+
+
+
+ <div class="bg-light py-3">
       <div class="container">
         <div class="row">
           <div class="col-md-12 mb-0">
@@ -117,54 +130,31 @@
         </div>
       </div>
     </div>
-    <div class="title-section text-center col-12 mt-5 mb-3">
-        <h2>Votre<strong class="text-primary"> Informations</strong></h2>
-    </div>
-    <div class="center-container">
-    <div class="form-container mt-3 mb-3">
-    <div class="container">
 
-    <table class="table" style="margin-top:50px;">
-        <tbody>
-            <tr>
-                <th>Id</th>
-                <td>{{ patient.getIdPatient() }}</td>
-            </tr>
-            <tr>
-                <th>Prenom</th>
-                <td>{{ patient.prenomP }}</td>
-            </tr>
-             <tr>
-                <th>Nom</th>
-                <td>{{ patient.nomP }}</td>
-            </tr>
-            <tr>
-                <th>Email</th>
-                <td>{{ patient.emailP }}</td>
-            </tr>
-            <tr>
-                <th>Numéro de téléphone</th>
-                <td>{{ patient.numTelP }}</td>
-            </tr>
-        </tbody>
-    </table>
+
+
+   <div class="title-section text-center col-12 mt-5 mb-3">
+         <h2>Réservation <strong class="text-primary"> d'un rendez-vous</strong></h2>
     </div>
-    </div>
-    </div>
-    {% set id_patient = patient.getIdPatient() %}
-        <div class="center-container">
-            <div class="row mb-5 mt-3" >
-                    <a class="btn btn-primary" style="margin-right:10px;" href="{{ path('app_patient_edit', {'id': patient.getIdPatient()}) }}">Modifier</a>
-                    <a href="{{ path('app_patient_espace',{'id':id_patient}) }}" class="btn btn-outline-primary">Retourner</a>
+
+
+     <div class="center-container">
+      <div class="form-container mt-5 mb-5">
+        <div class="site-section">
+       <div class="row">
+              <form class="col-md-12" method="post" novalidate >  
+                  {{ include('reservation_rdv/_form.html.twig',{'state': 'new','idPatient':idPatient}) }}
+              </form>
             </div>
         </div>
-    
+      </div>
+    </div> 
 
-    
-{% block footer %}
-{{ parent() }}
-</div>
-{% endblock %}
-{% endblock %}
+    {% block footer %}
+      {{ parent() }}
+    {% endblock %}
+    </div>  
+         
+  {% endblock %}
 </html>
 {% endblock %}

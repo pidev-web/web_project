@@ -2,33 +2,62 @@
 {% block html %} 
 <!DOCTYPE html>
 <html lang="en">
+    <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+        {% block css %}
+            {{ parent()}}
 
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-{% block css %}
-  <link href="{{asset('https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap')}}" rel="stylesheet">
-  <link rel="stylesheet" href="{{asset('fonts/icomoon/style.css')}}">
+            <style>
+              <style>
+                body {
+                  font-family: 'Nunito', sans-serif;
+                  background-color: #f8f9fa;
+                  margin: 0; /* Reset default margin */
+                  padding: 0; /* Reset default padding */
+                }
 
-  <link rel="stylesheet" href="{{asset('css/bootstrap.min.css')}}">
-  <link rel="stylesheet" href="{{asset('fonts/flaticon/font/flaticon.css')}}">
-  <link rel="stylesheet" href="{{asset('css/magnific-popup.css')}}">
-  <link rel="stylesheet" href="{{asset('css/jquery-ui.css')}}">
-  <link rel="stylesheet" href="{{asset('css/owl.carousel.min.css')}}">
-  <link rel="stylesheet" href="{{asset('css/owl.theme.default.min.css')}}">
+                .site-wrap {
+                  min-height: 100vh; /* Set minimum height to full viewport height */
+                  display: flex;
+                  flex-direction: column;
+                }
 
+                .site-footer {
+                  margin-top: auto; /* Push footer to the bottom */
+                }
+               .center-Buttons-container {
+                flex: 1;
+                /* Allow the center container to take up remaining space */
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                }
+                .center-container {
+                  flex: 1; /* Allow the center container to take up remaining space */
+                  display: flex;
+                  justify-content: center;
+                  align-items: center;
+                }
 
-  <link rel="stylesheet" href="{{asset('css/aos.css')}}">
+                 .form-container {
+                  max-width:fit-content;
+                  width: 100%;
+                  padding: 40px;
+                  background-color: #ffffff;
+                  border-radius: 20px;
+                  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+                }
+            </style>
+        {% endblock %}
+    </head>
 
-  <link rel="stylesheet" href="{{asset('css/style.css')}}">
-{% endblock %}
-</head>
+{% block title %}Edit Patient{% endblock %}
 
-<body>
 {% block body %}
-  <div class="site-wrap">
-  {% block navbar %}
-  <div class="site-navbar py-2">
+<div class="site-wrap">
+
+      <div class="site-navbar py-2">
 
       <div class="search-wrap">
         <div class="container">
@@ -71,8 +100,8 @@
                     <li><a href="#">Tea &amp; Coffee</a></li>
                 </ul>
             </li>
-            <li ><a href="{{ path('app_patient_index') }}">Patient</a>
-            <li class="active"><a href="{{ path('app_fiche_patient_index') }}">Médecin</a><li>
+            <li class="active"><a href="{{ path('app_patient_index') }}">Patient</a>
+            <li><a href="{{ path('app_fiche_patient_index') }}">Médecin</a><li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
@@ -86,7 +115,6 @@
         </div>
       </div>
     </div>
-{% endblock %}
 
     <div class="bg-light py-3">
       <div class="container">
@@ -98,56 +126,28 @@
         </div>
       </div>
     </div>
-  
 
-    <div class="owl-carousel owl-single px-0">
-    <div class="site-blocks-cover overlay" style="background-image: url('/images/espacepatient.png');">
-        <div class="container">
+    <div class="title-section text-center col-12 mt-5 mb-3">
+         <h2>Modifier votre <strong class="text-primary">reservation</strong></h2>
+    </div>
+
+    <div class="center-container">
+      <div class="form-container mt-5 mb-5">
+        <div class="site-section">
           <div class="row">
-            <div class="col-lg-12 mx-auto align-self-center">
-              <div class="site-block-cover-content text-center">
-                <h1 class="mb-0">Espace<strong class="text-primary"> Médecin</strong></h1>
-
-                <div class="row justify-content-center mb-5">
-                  <div class="col-lg-6 text-center">
-                    <p></p>
-                  </div>
-                </div>
-                
-                <p><a href="{{path('app_fiche_patient_new')}}" class="btn btn-primary px-5 py-3">Ajouter une fiche patient</a></p>
-                <p><a href="{{path('app_fiche_patient_listes')}}" class="btn btn-primary px-5 py-3">Voir listes des rendez-vous</a></p> 
-                <p><a href="{{path('app_fiche_patient_listes')}}" class="btn btn-primary px-5 py-3">Voir listes fiches</a></p>
-       
-              </div>
+              <form class="col-md-12" method="post" novalidate>  
+                  {{ include('reservation_rdv/_form.html.twig',{'state': 'update'}) }}
+              </form>
             </div>
-          </div>
         </div>
-    </div>
-
-    </div>
-
+      </div>
+    </div> 
 
     {% block footer %}
-{{ parent() }}
-</div>
-{% endblock %}
-
-
-
-{% block js %}
-  <script src="{{asset('js/jquery-3.3.1.min.js')}}"></script>
-  <script src="{{asset('js/jquery-ui.js')}}"></script>
-  <script src="{{asset('js/popper.min.js')}}"></script>
-  <script src="{{asset('js/bootstrap.min.js')}}"></script>
-  <script src="{{asset('js/owl.carousel.min.js')}}"></script>
-  <script src="{{asset('js/jquery.magnific-popup.min.js')}}"></script>
-  <script src="{{asset('js/aos.js')}}"></script>
-
-  <script src="{{asset('js/main.js')}}"></script>
-
-{% endblock %}
-
-</body>
-{% endblock %}
+      {{ parent() }}
+    {% endblock %}
+    </div>  
+         
+  {% endblock %}
 </html>
 {% endblock %}

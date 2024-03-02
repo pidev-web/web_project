@@ -38,6 +38,19 @@ class Medecin
     private ?Specialite $idMedcin = null;
 
 
+    #[ORM\OneToMany(targetEntity: ReservationRdv::class, mappedBy: 'medecin')]
+    private Collection $relation_rdv;
+
+    #[ORM\OneToMany(targetEntity: FichePatient::class, mappedBy: 'relation_medecin')]
+    private Collection $relationFiche;
+
+    public function __construct()
+    {
+        $this->relation_rdv = new ArrayCollection();
+        $this->relationFiche = new ArrayCollection();
+    }
+
+
     public function getId(): ?int
     {
         return $this->id;
@@ -123,6 +136,66 @@ class Medecin
     public function setIdMedcin(?Specialite $idMedcin): static
     {
         $this->idMedcin = $idMedcin;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, ReservationRdv>
+     */
+    public function getRelationRdv(): Collection
+    {
+        return $this->relation_rdv;
+    }
+
+    public function addRelationRdv(ReservationRdv $relationRdv): static
+    {
+        if (!$this->relation_rdv->contains($relationRdv)) {
+            $this->relation_rdv->add($relationRdv);
+            $relationRdv->setMedecin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRelationRdv(ReservationRdv $relationRdv): static
+    {
+        if ($this->relation_rdv->removeElement($relationRdv)) {
+            // set the owning side to null (unless already changed)
+            if ($relationRdv->getMedecin() === $this) {
+                $relationRdv->setMedecin(null);
+            }
+        }
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, FichePatient>
+     */
+    public function getRelationFiche(): Collection
+    {
+        return $this->relationFiche;
+    }
+
+    public function addRelationFiche(FichePatient $relationFiche): static
+    {
+        if (!$this->relationFiche->contains($relationFiche)) {
+            $this->relationFiche->add($relationFiche);
+            $relationFiche->setRelationMedecin($this);
+        }
+
+        return $this;
+    }
+
+    public function removeRelationFiche(FichePatient $relationFiche): static
+    {
+        if ($this->relationFiche->removeElement($relationFiche)) {
+            // set the owning side to null (unless already changed)
+            if ($relationFiche->getRelationMedecin() === $this) {
+                $relationFiche->setRelationMedecin(null);
+            }
+        }
 
         return $this;
     }

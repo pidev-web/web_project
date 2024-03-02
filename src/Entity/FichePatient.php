@@ -53,6 +53,9 @@ class FichePatient
     #[Assert\NotBlank(message: "Veuillez saisir la maladie.")]
     private ?string $maladie = null;
 
+    #[ORM\ManyToOne(inversedBy: 'relationFiche')]
+    private ?Medecin $relation_medecin = null;
+
 
     public function getIdFiche(): ?int
     {

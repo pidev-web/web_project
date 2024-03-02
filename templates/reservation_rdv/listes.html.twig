@@ -27,7 +27,7 @@
 <body>
 {% block body %}
   <div class="site-wrap">
-  {% block navbar %}
+{% block navbar %}
   <div class="site-navbar py-2">
 
       <div class="search-wrap">
@@ -71,14 +71,14 @@
                     <li><a href="#">Tea &amp; Coffee</a></li>
                 </ul>
             </li>
-            <li ><a href="{{ path('app_patient_index') }}">Patient</a>
-            <li class="active"><a href="{{ path('app_fiche_patient_index') }}">Médecin</a><li>
+            <li class="active"><a href="{{ path('app_patient_index') }}">Patient</a>
+            <li><a href="{{ path('app_evenement_index') }}">Evènements</a></li>
             <li><a href="#">About</a></li>
             <li><a href="#">Contact</a></li>
         </ul>
     </nav>
-</div>
-<div class="icons">
+  </div>
+  <div class="icons">
   <a href="#" class="icons-btn d-inline-block js-search-open"><span class="icon-search"></span></a>
   <a href="#" class="site-menu-toggle js-menu-toggle ml-3 d-inline-block d-lg-none">
   <span class="icon-menu"></span></a>
@@ -99,35 +99,57 @@
       </div>
     </div>
   
+  <div class="title-section text-center col-12 mt-5 mb-3">
+         <h2>Listes <strong class="text-primary">des rendez-vous</strong></h2>
+  </div>
 
-    <div class="owl-carousel owl-single px-0">
-    <div class="site-blocks-cover overlay" style="background-image: url('/images/espacepatient.png');">
-        <div class="container">
-          <div class="row">
-            <div class="col-lg-12 mx-auto align-self-center">
-              <div class="site-block-cover-content text-center">
-                <h1 class="mb-0">Espace<strong class="text-primary"> Médecin</strong></h1>
-
-                <div class="row justify-content-center mb-5">
-                  <div class="col-lg-6 text-center">
-                    <p></p>
-                  </div>
-                </div>
-                
-                <p><a href="{{path('app_fiche_patient_new')}}" class="btn btn-primary px-5 py-3">Ajouter une fiche patient</a></p>
-                <p><a href="{{path('app_fiche_patient_listes')}}" class="btn btn-primary px-5 py-3">Voir listes des rendez-vous</a></p> 
-                <p><a href="{{path('app_fiche_patient_listes')}}" class="btn btn-primary px-5 py-3">Voir listes fiches</a></p>
-       
-              </div>
+    <div class="site-section">
+      <div class="container">
+        <div class="row mb-5">
+          <form class="col-md-12" method="post">
+            <div class="site-blocks-table">
+              <table class="table table-bordered">
+                   
+        <thead>
+            <tr>
+                <th>Id</th>
+                <th>Date de réservation</th>
+                <th>Nom et prenom Patient</th>
+                <th>Nom et prenom Medecin</th>
+                <th>Statut</th>
+                <th>actions</th>
+            </tr>
+        </thead>
+        <tbody>
+        {% for rdv in listesrdvs %}
+            <tr>
+                <td>{{ rdv.getId() }}</td>
+                <td>{{ rdv.patient.getNomP() }} {{ rdv.patient.getPrenomP() }}</td>
+                <td>{{ rdv.medecin.getNom() }} {{ rdv.medecin.getPrenom() }}</td>
+                <td>{{ rdv.statut }}</td>
+                <td>
+                    <a href="{{ path('app_reservation_show', {'idPatient':idPatient,'id': rdv.getId()}) }}">afficher</a>
+                    <a href="{{ path('app_reservation_edit', {'idPatient':idPatient,'id': rdv.getId()}) }}">modifier</a>
+                </td>
+            </tr>
+        {% else %}
+            <tr>
+                <td colspan="7">no records found</td>
+            </tr>
+        {% endfor %}
+        </tbody>
+    </table>
+  <div align="center">
+    <a class="btn btn-primary"  style="margin-top:50px;" href="{{ path('app_patient_new') }}">Create new</a>
+    </div>
+              </table>
             </div>
-          </div>
+          </form>
         </div>
+      </div>
     </div>
 
-    </div>
-
-
-    {% block footer %}
+{% block footer %}
 {{ parent() }}
 </div>
 {% endblock %}

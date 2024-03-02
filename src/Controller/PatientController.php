@@ -3,13 +3,21 @@
 namespace App\Controller;
 
 use App\Entity\Patient;
+use App\Form\JoinEspaceType;
 use App\Form\PatientType;
+use App\Model\JoinEspace;
 use App\Repository\PatientRepository;
 use Doctrine\ORM\EntityManagerInterface;
+use MercurySeries\FlashyBundle\FlashyNotifier;
 use Symfony\Bundle\FrameworkBundle\Controller\AbstractController;
+use Symfony\Component\Form\Extension\Core\Type\ButtonType;
+use Symfony\Component\Form\Extension\Core\Type\SubmitType;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Attribute\Route;
+use Symfony\Component\Routing\Generator\UrlGeneratorInterface;
+use Symfony\Component\Validator\Constraints\Email;
+use Symfony\Component\Validator\Constraints\NotBlank;
 
 #[Route('/patient')]
 class PatientController extends AbstractController
@@ -19,11 +27,7 @@ class PatientController extends AbstractController
     {
         return $this->render('patient/index.html.twig');
     }
-    #[Route('/espace/{id}', name: 'app_patient_espace', methods: ['GET'])]
-    public function espace($id): Response
-    {
-        return $this->render('patient/espace.html.twig', ['id' => $id]);
-    }
+
     #[Route('/list', name: 'app_patient_list', methods: ['GET'])]
     public function list(PatientRepository $patientRepository): Response
     {
@@ -33,7 +37,7 @@ class PatientController extends AbstractController
     }
 
     #[Route('/new', name: 'app_patient_new', methods: ['GET', 'POST'])]
-    public function new(Request $request, EntityManagerInterface $entityManager): Response
+    public function new(Request $request, EntityManagerInterface $entityManager, FlashyNotifier $flashy): Response
     {
         $patient = new Patient();
         $form = $this->createForm(PatientType::class, $patient);
@@ -42,8 +46,10 @@ class PatientController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($patient);
             $entityManager->flush();
+            $flashy->success('Event created!',);
             return $this->render(
                 'patient/espace.html.twig',
+                ['id' => $patient->getIdPatient(),]
             );
         }
         return $this->render('patient/new.html.twig', [
@@ -51,6 +57,51 @@ class PatientController extends AbstractController
             'form' => $form,
         ]);
     }
+
+    #[Route('/join', name: 'app_patient_join', methods: ['GET', 'POST'])]
+    public function join(Request $request, PatientRepository $patientRepository, FlashyNotifier $flashy, UrlGeneratorInterface $urlGenerator): Response
+    {
+        $url = $urlGenerator->generate('app_patient_index');
+        $form = $this->createFormBuilder()
+            ->add('email', null, [
+                'constraints' => [
+                    new NotBlank(['message' => 'Veuillez saisir votre adresse e-mail.']),
+                    new Email(['message' => 'L\'adresse e-mail "{{ value }}" n\'est pas valide.']),
+                ],
+            ])
+            ->add('submit', SubmitType::class, ['label' => 'Aller', 'attr' => ['class' => 'btn btn-primary']])
+            ->add('cancel', ButtonType::class, [
+                'label' => 'Annuler',
+                'attr' => [
+                    'class' => 'btn btn-outline-primary',
+                    'formnovalidate' => 'formnovalidate',
+                    'onclick' => "window.location.href='$url'",
+                ],
+            ])
+            ->getForm();
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $data = $form->getData();
+            $patient = $patientRepository->findOneBy(['email_P' => $data['email']]);
+            if ($patient) {
+                return $this->redirectToRoute('app_patient_espace', ['id' => $patient->getIdPatient()]);
+            } else {
+            }
+        }
+        $flashy->success('Event created!');
+        return $this->render('patient/login.html.twig', [
+            'form' => $form,
+        ]);
+    }
+
+
+    #[Route('/espace/{id}', name: 'app_patient_espace', methods: ['GET'])]
+    public function espace(int $id): Response
+    {
+        return $this->render('patient/espace.html.twig', ['id' => $id]);
+    }
+
 
     #[Route('/{id}', name: 'app_patient_show', methods: ['GET'])]
     public function show(Patient $patient): Response
@@ -70,7 +121,7 @@ class PatientController extends AbstractController
         if ($form->isSubmitted() && $form->isValid()) {
             $entityManager->persist($patient);
             $entityManager->flush();
-            return $this->redirectToRoute('app_patient_list', [], Response::HTTP_SEE_OTHER);
+            return $this->redirectToRoute('app_patient_show', ['id' => $patient->getIdPatient(),], Response::HTTP_SEE_OTHER);
         }
 
         return $this->render('patient/edit.html.twig', [
@@ -85,7 +136,7 @@ class PatientController extends AbstractController
         $patient = $rep->find($id);
         $entityManager->remove($patient);
         $entityManager->flush();
-        return $this->redirectToRoute('app_patient_list', [], Response::HTTP_SEE_OTHER);
+        return $this->redirectToRoute('app_patient_index', [], Response::HTTP_SEE_OTHER);
     }
 
 

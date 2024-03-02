@@ -1,4 +1,5 @@
-{{ form_start(form) }}
+{% set id_patient = patient.getIdPatient() %}
+{{ form_start(form,{'attr': {'novalidate': 'novalidate'}}) }}
  <table style="border-collapse: separate; border-spacing: 5px;">
 <tr>
 <th> {{ form_label(form.prenomP, "Prénom:") }}</th>
@@ -30,20 +31,20 @@
 </td>
      
 </table>
-  {% set id_patient = patient.getIdPatient() %}
-     <div class="center-Buttons-container">
- {% if state=="update" %}
-    
-        <div class="row" style="margin-top:50px;" >
-            <button class="btn btn-primary" style="margin-right:10px;" href="{{ path('app_patient_edit', {'id': id_patient}) }}">Modifier</button>
-            <a href="{{ path('app_patient_espace',{'id':id_patient}) }}" class="btn btn-outline-primary">Annuler </a>
-        </div>
-{% else %}
-        <div class="row" style="margin-top:50px;" >
-            <button class="btn btn-primary" style="margin-right:10px;" href="{{ path('app_patient_new')}}">Créer</button>
-            <a href="{{ path('app_patient_index') }}" class="btn btn-outline-primary" >Annuler </a>
-        </div>
-{% endif %}
+  
+    <div class="center-Buttons-container">
+    {% set id_patient = patient.getIdPatient() %}
+    {% if state=="update" %}
+            <div class="row" style="margin-top:50px;" >
+                <button class="btn btn-primary" style="margin-right:10px;" href="{{ path('app_patient_edit', {'id': id_patient}) }}">Modifier</button>
+                <a href="{{ path('app_patient_show',{'id':id_patient}) }}" class="btn btn-outline-primary">Annuler </a>
+            </div>
+    {% else %}
+            <div class="row" style="margin-top:50px;" >
+                <button class="btn btn-primary" style="margin-right:10px;" href="{{ path('app_patient_new')}}">Créer</button>
+                <a href="{{ path('app_patient_index') }}" class="btn btn-outline-primary" >Annuler </a>
+            </div>
+    {% endif %}
             
 </div>
 {{ form_end(form) }}
